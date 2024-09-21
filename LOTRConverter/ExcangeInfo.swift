@@ -34,14 +34,7 @@ struct ExcangeInfo: View {
                 ExchangeRate(leftImage: .silverpenny, rightImage: .copperpenny, text: "1 Silver Penny = 100 Cooper Pennies")
                 
                 // Done Button
-                Button("Done") {
-                    dismiss()
-                }
-                .buttonStyle(.borderedProminent)
-                .tint(.brown)
-                .font(.largeTitle)
-                .padding()
-                .foregroundStyle(.white)
+                DoneButton()
             }
             .foregroundStyle(.black)
         }
