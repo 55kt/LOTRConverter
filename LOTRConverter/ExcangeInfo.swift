@@ -1,6 +1,10 @@
 import SwiftUI
 
 struct ExcangeInfo: View {
+    // MARK: - Properties
+    @Environment(\.dismiss) var dismiss
+    
+    // MARK: - Body
     var body: some View {
         ZStack {
             // Background Parchment Image
@@ -31,7 +35,7 @@ struct ExcangeInfo: View {
                 
                 // Done Button
                 Button("Done") {
-                    
+                    dismiss()
                 }
                 .buttonStyle(.borderedProminent)
                 .tint(.brown)
@@ -44,6 +48,7 @@ struct ExcangeInfo: View {
     }
 }
 
+// MARK: - Preview
 #Preview {
     ExcangeInfo()
 }
