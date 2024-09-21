@@ -70,7 +70,6 @@ struct ContentView: View {
                                 .scaledToFit()
                                 .frame(height: 33)
                         }
-                        .padding(.bottom, -5)
                         
                         // TextField
                         TextField("Amount", text: $rightAmount)
