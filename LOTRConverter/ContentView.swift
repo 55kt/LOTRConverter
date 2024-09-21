@@ -3,6 +3,8 @@ import SwiftUI
 struct ContentView: View {
     // MARK: - Properties
     @State var showExchangeInfo = false
+    @State var leftAmount = ""
+    @State var rightAmount = ""
     
     // MARK: - Body
     var body: some View {
@@ -43,8 +45,8 @@ struct ContentView: View {
                         }
                         
                         // TextField
-                        Text("TextField")
-                            .foregroundStyle(.white)
+                        TextField("Amount", text: $leftAmount)
+                            .textFieldStyle(.roundedBorder)
                     }
                     
                     // Equal sign
@@ -68,12 +70,17 @@ struct ContentView: View {
                                 .scaledToFit()
                                 .frame(height: 33)
                         }
+                        .padding(.bottom, -5)
                         
                         // TextField
-                        Text("TextField")
-                            .foregroundStyle(.white)
+                        TextField("Amount", text: $rightAmount)
+                            .textFieldStyle(.roundedBorder)
+                            .multilineTextAlignment(.trailing)
                     }
                 }
+                .padding()
+                .background(.black.opacity(0.5))
+                .clipShape(.capsule)
                 
                 Spacer()
                 
