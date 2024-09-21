@@ -21,22 +21,13 @@ struct ExcangeInfo: View {
                     .padding()
                 
                 // Exchange Rates
-                HStack {
-                    // Left Currency Image
-                    Image(.goldpiece)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(height: 33)
-                    
-                    // Exchange Rate Text
-                    Text("1 Gold Piece = 4 Gold Pennies")
-                    
-                    // Right Currency Image
-                    Image(.goldpenny)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(height: 33)
-                }
+                ExchangeRate(leftImage: .goldpiece, rightImage: .goldpenny, text: "1 Gold Piece = 4 Gold Pennies")
+                
+                ExchangeRate(leftImage: .goldpenny, rightImage: .silverpiece, text: "1 Gold Penny = 25 Silver Pennies")
+                
+                ExchangeRate(leftImage: .silverpiece, rightImage: .silverpenny, text: "1 Silver Piece = 42 Silver Pennies")
+                
+                ExchangeRate(leftImage: .silverpenny, rightImage: .copperpenny, text: "1 Silver Penny = 100 Cooper Pennies")
                 
                 // Done Button
                 Button("Done") {
