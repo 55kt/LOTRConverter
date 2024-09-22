@@ -18,17 +18,25 @@ struct SelectCurrency: View {
                     .fontWeight(.bold)
                 
                 // Currency Icons
+                LazyVGrid(columns: [GridItem(), GridItem(), GridItem()]) {
+                    
+                    ForEach(0..<5) { _ in
+                        CurrencyIcon(currencyName: "Gold Piece", currencyImage: .goldpiece)
+
+                    }
+                    
+//                    CurrencyIcon(currencyName: "Gold Penny", currencyImage: .goldpenny)
+//                    CurrencyIcon(currencyName: "Silver Piece", currencyImage: .silverpiece)
+//                    CurrencyIcon(currencyName: "Silver Penny", currencyImage: .silverpenny)
+//                    CurrencyIcon(currencyName: "Copper Penny", currencyImage: .copperpenny)
+                }
                 
                 // Text
                 Text("Select the currency you would like to convert to: ")
                     .fontWeight(.bold)
                 
                 // Currency Icons
-                CurrencyIcon(currencyName: "Gold Piece", currencyImage: .goldpiece)
-                CurrencyIcon(currencyName: "Gold Penny", currencyImage: .goldpenny)
-                CurrencyIcon(currencyName: "Silver Piece", currencyImage: .silverpiece)
-                CurrencyIcon(currencyName: "Silver Penny", currencyImage: .silverpenny)
-                CurrencyIcon(currencyName: "Copper Penny", currencyImage: .copperpenny)
+
                 
                 // Done Button
                 DoneButton()
