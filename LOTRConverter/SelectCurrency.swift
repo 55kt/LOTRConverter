@@ -19,16 +19,10 @@ struct SelectCurrency: View {
                 
                 // Currency Icons
                 LazyVGrid(columns: [GridItem(), GridItem(), GridItem()]) {
-                    
-                    ForEach(0..<5) { _ in
-                        CurrencyIcon(currencyName: "Gold Piece", currencyImage: .goldpiece)
+                    ForEach(Currency.allCases) { currency in
+                        CurrencyIcon(currencyName: currency.name, currencyImage: currency.image)
 
                     }
-                    
-//                    CurrencyIcon(currencyName: "Gold Penny", currencyImage: .goldpenny)
-//                    CurrencyIcon(currencyName: "Silver Piece", currencyImage: .silverpiece)
-//                    CurrencyIcon(currencyName: "Silver Penny", currencyImage: .silverpenny)
-//                    CurrencyIcon(currencyName: "Copper Penny", currencyImage: .copperpenny)
                 }
                 
                 // Text
@@ -36,6 +30,12 @@ struct SelectCurrency: View {
                     .fontWeight(.bold)
                 
                 // Currency Icons
+                LazyVGrid(columns: [GridItem(), GridItem(), GridItem()]) {
+                    ForEach(Currency.allCases) { currency in
+                        CurrencyIcon(currencyName: currency.name, currencyImage: currency.image)
+
+                    }
+                }
 
                 
                 // Done Button
