@@ -3,6 +3,9 @@ import SwiftUI
 struct ContentView: View {
     // MARK: - Properties
     @State var showExchangeInfo = false
+    @State var showSelectCurrency = false
+    @State var leftCurrency: Currency = .silverPiece
+    @State var rightCurrency: Currency = .goldPiece
     @State var leftAmount = ""
     @State var rightAmount = ""
     
@@ -33,13 +36,13 @@ struct ContentView: View {
                         // Currency
                         HStack {
                             // Currency image
-                            Image(.silverpiece)
+                            Image(leftCurrency.image)
                                 .resizable()
                                 .scaledToFit()
                                 .frame(height: 33)
                             
                             // Currency Text
-                            Text("Silver Piece")
+                            Text(leftCurrency.name)
                                 .font(.headline)
                                 .foregroundStyle(.white)
                         }
@@ -60,15 +63,18 @@ struct ContentView: View {
                         // Currency
                         HStack {
                             // Currency Text
-                            Text("Gold Piece")
+                            Text(rightCurrency.name)
                                 .font(.headline)
                                 .foregroundStyle(.white)
                             
                             // Currency Image
-                            Image(.goldpiece)
+                            Image(rightCurrency.image)
                                 .resizable()
                                 .scaledToFit()
                                 .frame(height: 33)
+                        }
+                        .onTapGesture {
+                            showSelectCurrency.toggle()
                         }
                         
                         // TextField
@@ -95,11 +101,15 @@ struct ContentView: View {
                             .foregroundStyle(.white)
                     }
                     .padding(.trailing)
-                    .sheet(isPresented: $showExchangeInfo) {
-                        ExcangeInfo()
-                    }
                 }
             }
+        }
+        // Sheets Area
+        .sheet(isPresented: $showExchangeInfo) {
+            ExcangeInfo()
+        }
+        .sheet(isPresented: $showSelectCurrency) {
+            SelectCurrency(topCurrency: leftCurrency, bottomCurrency: rightCurrency)
         }
     }
 }
