@@ -4,8 +4,10 @@ struct ContentView: View {
     // MARK: - Properties
     @State var showExchangeInfo = false
     @State var showSelectCurrency = false
+    
     @State var leftCurrency: Currency = .silverPiece
     @State var rightCurrency: Currency = .goldPiece
+    
     @State var leftAmount = ""
     @State var rightAmount = ""
     
@@ -109,7 +111,7 @@ struct ContentView: View {
             ExcangeInfo()
         }
         .sheet(isPresented: $showSelectCurrency) {
-            SelectCurrency(topCurrency: leftCurrency, bottomCurrency: rightCurrency)
+            SelectCurrency(topCurrency: $leftCurrency, bottomCurrency: $rightCurrency)
         }
     }
 }

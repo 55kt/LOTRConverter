@@ -2,8 +2,8 @@ import SwiftUI
 
 struct SelectCurrency: View {
     // MARK: - Properties
-    @State var topCurrency: Currency = .goldPiece
-    @State var bottomCurrency: Currency = .copperPenny
+    @Binding var topCurrency: Currency
+    @Binding var bottomCurrency: Currency
     
     // MARK: - Body
     var body: some View {
@@ -20,14 +20,14 @@ struct SelectCurrency: View {
                     .fontWeight(.bold)
                 
                 // Currency Icons
-                IconGrid(selectedCurrency: topCurrency)
+                IconGrid(selectedCurrency: $topCurrency)
                 
                 // Text
                 Text("Select the currency you would like to convert to: ")
                     .fontWeight(.bold)
                 
                 // Currency Icons
-                IconGrid(selectedCurrency: bottomCurrency)
+                IconGrid(selectedCurrency: $bottomCurrency)
 
                 
                 // Done Button
@@ -42,5 +42,5 @@ struct SelectCurrency: View {
 
 // MARK: - Preview
 #Preview {
-    SelectCurrency()
+    SelectCurrency(topCurrency: .constant(.goldPiece), bottomCurrency: .constant(.copperPenny))
 }
