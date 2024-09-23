@@ -48,6 +48,9 @@ struct ContentView: View {
                                 .font(.headline)
                                 .foregroundStyle(.white)
                         }
+                        .onTapGesture {
+                            showSelectCurrency.toggle()
+                        }
                         
                         // TextField
                         TextField("Amount", text: $leftAmount)
