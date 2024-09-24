@@ -57,13 +57,9 @@ struct ContentView: View {
                         
                         // TextField
                         TextField("Amount", text: $leftAmount)
+                            .keyboardType(.decimalPad)
                             .textFieldStyle(.roundedBorder)
                             .focused($leftTyping)
-                            .onChange(of: leftAmount) {
-                                if leftTyping {
-                                    rightAmount = leftCurrency.convert(leftAmount, to: rightCurrency)
-                                }
-                            }
                     }
                     
                     // Equal sign
@@ -93,14 +89,10 @@ struct ContentView: View {
                         
                         // TextField
                         TextField("Amount", text: $rightAmount)
+                            .keyboardType(.decimalPad)
                             .textFieldStyle(.roundedBorder)
                             .multilineTextAlignment(.trailing)
                             .focused($rightTyping)
-                            .onChange(of: rightAmount) {
-                                if rightTyping {
-                                    leftAmount = rightCurrency.convert(rightAmount, to: leftCurrency)
-                                }
-                            }
                     }
                 }
                 .padding()
@@ -124,7 +116,25 @@ struct ContentView: View {
                 }
             }
         }
-        // Sheets Area
+        // MARK: - OnChange Area
+        .onChange(of: leftAmount) {
+            if leftTyping {
+                rightAmount = leftCurrency.convert(leftAmount, to: rightCurrency)
+            }
+        }
+        .onChange(of: rightAmount) {
+            if rightTyping {
+                leftAmount = rightCurrency.convert(rightAmount, to: leftCurrency)
+            }
+        }
+        .onChange(of: leftCurrency) {
+            leftAmount = rightCurrency.convert(rightAmount, to: leftCurrency)
+        }
+        .onChange(of: rightCurrency) {
+            rightAmount = leftCurrency.convert(leftAmount, to: rightCurrency)
+        }
+        
+        // MARK: - Sheets Area
         .sheet(isPresented: $showExchangeInfo) {
             ExcangeInfo()
         }
