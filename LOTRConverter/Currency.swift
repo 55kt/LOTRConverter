@@ -4,10 +4,11 @@ enum Currency: Double, CaseIterable, Identifiable {
     var id: Currency { self }
     
     case goldPiece = 1
-    case goldPenny = 0.14
-    case silverPiece = 0.42
-    case silverPenny = 0.11
-    case copperPenny = 0.39
+    case goldPenny = 4
+    case silverPiece = 16
+    case silverPenny = 64
+    case copperPenny = 6400
+    case europenny = 2.5
     
     var image: ImageResource {
         switch self {
@@ -21,6 +22,8 @@ enum Currency: Double, CaseIterable, Identifiable {
             return .silverpenny
         case .copperPenny:
             return .copperpenny
+        case .europenny:
+            return .europenny
         }
     }
     
@@ -36,6 +39,8 @@ enum Currency: Double, CaseIterable, Identifiable {
             return "Silver Penny"
         case .copperPenny:
             return "Copper Penny"
+        case .europenny:
+            return "Europenny"
         }
     }
     

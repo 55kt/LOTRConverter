@@ -27,11 +27,13 @@ struct ExcangeInfo: View {
                 // Exchange Rates
                 ExchangeRate(leftImage: .goldpiece, rightImage: .goldpenny, text: "1 Gold Piece = 4 Gold Pennies")
                 
-                ExchangeRate(leftImage: .goldpenny, rightImage: .silverpiece, text: "1 Gold Penny = 25 Silver Pennies")
+                ExchangeRate(leftImage: .goldpenny, rightImage: .silverpiece, text: "1 Gold Penny = 4 Silver Pieces")
                 
-                ExchangeRate(leftImage: .silverpiece, rightImage: .silverpenny, text: "1 Silver Piece = 42 Silver Pennies")
+                ExchangeRate(leftImage: .silverpiece, rightImage: .silverpenny, text: "1 Silver Piece = 4 Silver Pennies")
                 
                 ExchangeRate(leftImage: .silverpenny, rightImage: .copperpenny, text: "1 Silver Penny = 100 Cooper Pennies")
+                
+                ExchangeRate(leftImage: .europenny, rightImage: .goldpiece, text: "1 Euro Penny = 2.5 Gold Piece")
                 
                 // Done Button
                 DoneButton()
