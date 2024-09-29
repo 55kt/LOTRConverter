@@ -6,14 +6,15 @@ struct ContentView: View {
     @State var showExchangeInfo = false
     @State var showSelectCurrency = false
     
-    @State var leftCurrency: Currency = .silverPiece
-    @State var rightCurrency: Currency = .goldPiece
+    @State private var leftEnteredAmount: String = UserDefaults.standard.string(forKey: "leftSavedCurrencyAmount") ?? ""
+    
+    @State private var rightEnteredAmount: String = UserDefaults.standard.string(forKey: "rightSavedCurrencyAmount") ?? ""
+    
+    @State var leftCurrency: Currency = Currency(rawValue: UserDefaults.standard.double(forKey: "leftSavedCurrency")) ?? .silverPiece
+    @State var rightCurrency: Currency = Currency(rawValue: UserDefaults.standard.double(forKey: "rightSavedCurrency")) ?? .goldPiece
     
     @FocusState var leftTyping
     @FocusState var rightTyping
-    
-    @State var leftAmount = ""
-    @State var rightAmount = ""
     
     // MARK: - Body
     var body: some View {
@@ -58,7 +59,7 @@ struct ContentView: View {
                         .popoverTip(CurrencyTip(), arrowEdge: .bottom)
                         
                         // TextField
-                        TextField("Amount", text: $leftAmount)
+                        TextField("Amount", text: $leftEnteredAmount)
                             .keyboardType(.decimalPad)
                             .textFieldStyle(.roundedBorder)
                             .focused($leftTyping)
@@ -90,7 +91,7 @@ struct ContentView: View {
                         }
                         
                         // TextField
-                        TextField("Amount", text: $rightAmount)
+                        TextField("Amount", text: $rightEnteredAmount)
                             .keyboardType(.decimalPad)
                             .textFieldStyle(.roundedBorder)
                             .multilineTextAlignment(.trailing)
@@ -118,27 +119,42 @@ struct ContentView: View {
                 }
             }
         }
+        .onTapGesture {
+            self.dismissKeyboard()
+        }
         .task {
             try? Tips.configure()
         }
         
         // MARK: - OnChange Area
-        .onChange(of: leftAmount) {
-            if leftTyping {
-                rightAmount = leftCurrency.convert(leftAmount, to: rightCurrency)
-            }
-        }
-        .onChange(of: rightAmount) {
-            if rightTyping {
-                leftAmount = rightCurrency.convert(rightAmount, to: leftCurrency)
-            }
-        }
-        .onChange(of: leftCurrency) {
-            leftAmount = rightCurrency.convert(rightAmount, to: leftCurrency)
-        }
-        .onChange(of: rightCurrency) {
-            rightAmount = leftCurrency.convert(leftAmount, to: rightCurrency)
-        }
+        .onChange(of: leftEnteredAmount) { oldValue, newValue in
+                    if leftTyping {
+                        if !newValue.isEmpty, let _ = Double(newValue) {
+                            rightEnteredAmount = leftCurrency.convert(leftEnteredAmount, to: rightCurrency)
+                            UserDefaults.standard.set(newValue, forKey: "leftSavedCurrencyAmount")
+                        }
+                    }
+                }
+                .onChange(of: rightEnteredAmount) { oldValue, newValue in
+                    if rightTyping {
+                        if !newValue.isEmpty, let _ = Double(newValue) {
+                            leftEnteredAmount = rightCurrency.convert(rightEnteredAmount, to: leftCurrency)
+                            UserDefaults.standard.set(newValue, forKey: "rightSavedCurrencyAmount")
+                        }
+                    }
+                }
+                .onChange(of: leftCurrency) { oldValue, newValue in
+                    if !rightEnteredAmount.isEmpty, let _ = Double(rightEnteredAmount) {
+                        leftEnteredAmount = rightCurrency.convert(rightEnteredAmount, to: leftCurrency)
+                        UserDefaults.standard.set(newValue.rawValue, forKey: "leftSavedCurrency")
+                    }
+                }
+                .onChange(of: rightCurrency) { oldValue, newValue in
+                    if !leftEnteredAmount.isEmpty, let _ = Double(leftEnteredAmount) {
+                        rightEnteredAmount = leftCurrency.convert(leftEnteredAmount, to: rightCurrency)
+                        UserDefaults.standard.set(newValue.rawValue, forKey: "rightSavedCurrency")
+                    }
+                }
         
         // MARK: - Sheets Area
         .sheet(isPresented: $showExchangeInfo) {
@@ -147,6 +163,12 @@ struct ContentView: View {
         .sheet(isPresented: $showSelectCurrency) {
             SelectCurrency(topCurrency: $leftCurrency, bottomCurrency: $rightCurrency)
         }
+    }
+}
+
+extension View {
+    func dismissKeyboard() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
 }
 
